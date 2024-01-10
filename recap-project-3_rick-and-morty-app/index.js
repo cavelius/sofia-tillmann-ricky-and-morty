@@ -11,20 +11,54 @@ const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
 
 // States
-const maxPage = 10;
-let page = 5;
+const maxPage = 42;
+let page = 1;
 const searchQuery = "";
+
+// create previous button and append to navigation
+// add event listener to show previous page
 
 function createPrevBtn() {
   const prevBtn = document.createElement("button");
   prevBtn.textContent = "previous";
-  navigation.append(prevBtn);
   prevBtn.addEventListener("click", (event) => {
-    // page = 10;
     console.log("clicked");
+    page = page - 1;
+    if (page < 1) {
+      return;
+    }
+    console.log(page);
+    fetchCharacters();
   });
+  return prevBtn;
 }
-createPrevBtn();
+
+// create pagination
+
+function createPagination() {
+  const pagination = document.createElement("span");
+  pagination.classList.add("navigation__pagination");
+  pagination.textContent = `${page} / ${maxPage}`;
+  return pagination;
+}
+
+// create next button and append to navigation
+// add event listener to show next page
+
+function createNextBtn() {
+  const nextBtn = document.createElement("button");
+  nextBtn.textContent = "next";
+  nextBtn.addEventListener("click", (event) => {
+    console.log("clicked");
+    page = page + 1;
+    if (page > 42) {
+      return;
+    }
+    console.log(page);
+    fetchCharacters();
+  });
+  return nextBtn;
+}
 
 // createCharacterCard();
 
@@ -41,11 +75,10 @@ async function fetchCharacters() {
   cards.forEach((card) => {
     createCharacterCard(card);
   });
+  navigation.innerHTML = "";
+  const prevButton = createPrevBtn();
+  const pagination = createPagination();
+  const nextButton = createNextBtn();
+  navigation.append(prevButton, pagination, nextButton);
 }
 fetchCharacters();
-
-/* <button class="button button--prev" data-js="button-prev">
-previous
-</button>
-<span class="navigation__pagination" data-js="pagination">1 / 1</span>
-<button class="button button--next" data-js="button-next">next</button> */
