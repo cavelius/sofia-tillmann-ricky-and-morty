@@ -26,80 +26,25 @@ const prevButton = createBtn("previous", (event) => {
   } else {
     page = page - 1;
   }
-  console.log("Page after update", page);
   fetchCharacters();
 });
-
-// next button
 
 const nextButton = createBtn("next", (event) => {
-  console.log(page);
-  if (page >= 42) {
-    return;
-  } else {
-    page = page + 1;
-  }
-  console.log("Page after update", page);
-
-  fetchCharacters();
-});
-
-// previous button search
-
-const prevButtonSearch = createBtn("previous", (event) => {
-  console.log(page);
-  if (page <= 1) {
-    return;
-  } else {
-    page = page - 1;
-  }
-  console.log("Page after update", page);
-  fetchCharactersSearch();
-});
-
-// next button search
-
-const nextButtonSearch = createBtn("next", (event) => {
   console.log(page);
   if (page >= `${maxPage}`) {
     return;
   } else {
     page = page + 1;
   }
-  console.log("Page after update", page);
-  fetchCharactersSearch();
+  fetchCharacters();
 });
 
-// createCharacterCard();
-
 async function fetchCharacters() {
-  cardContainer.innerHTML = "";
-  const response = await fetch(
-    `https://rickandmortyapi.com/api/character?page=${page}`
-  );
-  const data = await response.json();
-  console.log(data);
-
-  const cards = data.results;
-
-  cards.forEach((card) => {
-    createCharacterCard(card);
-  });
-  navigation.innerHTML = "";
-
-  const pagination = createPagination(page, maxPage);
-
-  navigation.append(prevButton, pagination, nextButton);
-}
-fetchCharacters();
-
-async function fetchCharactersSearch() {
   cardContainer.innerHTML = "";
   const response = await fetch(
     `https://rickandmortyapi.com/api/character?name=${searchQuery}&page=${page}`
   );
   const data = await response.json();
-  console.log(data);
 
   const cards = data.results;
 
@@ -108,9 +53,12 @@ async function fetchCharactersSearch() {
   });
   maxPage = data.info.pages;
   navigation.innerHTML = "";
+
   const pagination = createPagination(page, maxPage);
-  navigation.append(prevButtonSearch, pagination, nextButtonSearch);
+
+  navigation.append(prevButton, pagination, nextButton);
 }
+fetchCharacters();
 
 searchBar.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -119,13 +67,7 @@ searchBar.addEventListener("submit", (event) => {
   const data = Object.fromEntries(formData);
 
   const formElements = event.target.elements.value;
-
-  console.log("Data", data);
-  console.log("Data value:", data.query);
-  console.log(formElements);
-  console.log("works");
   searchQuery = data.query;
-  console.log("search", searchQuery);
-  fetchCharactersSearch();
+  fetchCharacters();
   event.target.reset();
 });
