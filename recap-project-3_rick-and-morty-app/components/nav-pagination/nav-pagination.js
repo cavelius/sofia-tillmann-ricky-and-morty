@@ -1,3 +1,8 @@
-prevButton.addEventListener("click", (event) => {
-  page -= 1;
-});
+// create pagination
+
+export function createPagination(page, maxPage) {
+  const pagination = document.createElement("span");
+  pagination.classList.add("navigation__pagination");
+  pagination.textContent = `${page} / ${maxPage}`;
+  return pagination;
+}

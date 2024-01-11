@@ -1,5 +1,6 @@
 import { createCharacterCard } from "./components/card/card.js";
-// import { createSearchBar } from "./components/search-bar/search-bar.js";
+import { createBtn } from "./components/nav-button/nav-button.js";
+import { createPagination } from "./components/nav-pagination/nav-pagination.js";
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
@@ -7,9 +8,6 @@ const searchBarContainer = document.querySelector(
 );
 const searchBar = document.querySelector('[data-js="search-bar"]');
 const navigation = document.querySelector('[data-js="navigation"]');
-const prevButton = document.querySelector('[data-js="button-prev"]');
-const nextButton = document.querySelector('[data-js="button-next"]');
-const pagination = document.querySelector('[data-js="pagination"]');
 
 // States
 let maxPage = 42;
@@ -19,81 +17,58 @@ let searchQuery = "";
 // create previous button and append to navigation
 // add event listener to show previous page
 
-function createPrevBtn() {
-  const prevBtn = document.createElement("button");
-  prevBtn.textContent = "previous";
-  prevBtn.addEventListener("click", (event) => {
-    console.log("clicked");
-    if (page <= 1) {
-      return;
-    } else {
-      page = page - 1;
-    }
-    console.log(page);
-    fetchCharacters();
-  });
-  return prevBtn;
-}
+// previous button
 
-function createPrevBtnSearch() {
-  const prevBtnSearch = document.createElement("button");
-  prevBtnSearch.textContent = "previous";
-  prevBtnSearch.addEventListener("click", (event) => {
-    console.log("clicked");
-    if (page <= 1) {
-      return;
-    } else {
-      page = page - 1;
-    }
-    console.log(page);
-    fetchCharactersSearch();
-  });
-  return prevBtnSearch;
-}
+const prevButton = createBtn("previous", (event) => {
+  console.log(page);
+  if (page <= 1) {
+    return;
+  } else {
+    page = page - 1;
+  }
+  console.log("Page after update", page);
+  fetchCharacters();
+});
 
-// create pagination
+// next button
 
-function createPagination() {
-  const pagination = document.createElement("span");
-  pagination.classList.add("navigation__pagination");
-  pagination.textContent = `${page} / ${maxPage}`;
-  return pagination;
-}
+const nextButton = createBtn("next", (event) => {
+  console.log(page);
+  if (page >= 42) {
+    return;
+  } else {
+    page = page + 1;
+  }
+  console.log("Page after update", page);
 
-// create next button and append to navigation
-// add event listener to show next page
+  fetchCharacters();
+});
 
-function createNextBtn() {
-  const nextBtn = document.createElement("button");
-  nextBtn.textContent = "next";
-  nextBtn.addEventListener("click", (event) => {
-    console.log("clicked");
-    if (page >= 42) {
-      return;
-    } else {
-      page = page + 1;
-    }
-    console.log(page);
-    fetchCharacters();
-  });
-  return nextBtn;
-}
+// previous button search
 
-function createNextBtnSearch() {
-  const nextBtnSearch = document.createElement("button");
-  nextBtnSearch.textContent = "next";
-  nextBtnSearch.addEventListener("click", (event) => {
-    console.log("clicked");
-    if (page >= `${maxPage}`) {
-      return;
-    } else {
-      page = page + 1;
-    }
-    console.log(page);
-    fetchCharactersSearch();
-  });
-  return nextBtnSearch;
-}
+const prevButtonSearch = createBtn("previous", (event) => {
+  console.log(page);
+  if (page <= 1) {
+    return;
+  } else {
+    page = page - 1;
+  }
+  console.log("Page after update", page);
+  fetchCharactersSearch();
+});
+
+// next button search
+
+const nextButtonSearch = createBtn("next", (event) => {
+  console.log(page);
+  if (page >= `${maxPage}`) {
+    return;
+  } else {
+    page = page + 1;
+  }
+  console.log("Page after update", page);
+  fetchCharactersSearch();
+});
 
 // createCharacterCard();
 
@@ -104,21 +79,19 @@ async function fetchCharacters() {
   );
   const data = await response.json();
   console.log(data);
-  // return data;
+
   const cards = data.results;
 
   cards.forEach((card) => {
     createCharacterCard(card);
   });
   navigation.innerHTML = "";
-  const prevButton = createPrevBtn();
-  const pagination = createPagination();
-  const nextButton = createNextBtn();
+
+  const pagination = createPagination(page, maxPage);
+
   navigation.append(prevButton, pagination, nextButton);
 }
 fetchCharacters();
-
-// const form = document.querySelector('["search-bar"]');
 
 async function fetchCharactersSearch() {
   cardContainer.innerHTML = "";
@@ -127,7 +100,7 @@ async function fetchCharactersSearch() {
   );
   const data = await response.json();
   console.log(data);
-  // return data;
+
   const cards = data.results;
 
   cards.forEach((card) => {
@@ -135,9 +108,7 @@ async function fetchCharactersSearch() {
   });
   maxPage = data.info.pages;
   navigation.innerHTML = "";
-  const prevButtonSearch = createPrevBtnSearch();
-  const pagination = createPagination();
-  const nextButtonSearch = createNextBtnSearch();
+  const pagination = createPagination(page, maxPage);
   navigation.append(prevButtonSearch, pagination, nextButtonSearch);
 }
 
@@ -148,33 +119,13 @@ searchBar.addEventListener("submit", (event) => {
   const data = Object.fromEntries(formData);
 
   const formElements = event.target.elements.value;
-  // searchQuery = data;
 
   console.log("Data", data);
   console.log("Data value:", data.query);
   console.log(formElements);
-  // console.log(formElements.query.value);
   console.log("works");
   searchQuery = data.query;
   console.log("search", searchQuery);
   fetchCharactersSearch();
   event.target.reset();
 });
-
-// console.log(event.target);
-// console.log(formElements);
-// console.log(formElements.firstName);
-// console.log(formElements.firstName.value);
-
-// function createSearchBar() {
-//   const searchBar = document.createElement("input");
-//   searchBar.innerHTML = `
-
-//   `;
-//   searchBar.addEventListener("submit", (event) => {
-//     console.log("seach");
-//   });
-//   searchBarContainer.append(searchBar);
-// }
-
-// createSearchBar();
