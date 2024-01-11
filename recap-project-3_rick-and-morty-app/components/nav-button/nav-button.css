@@ -1,5 +1,7 @@
-.button {
+button {
   border: none;
+  border-radius: var(--border-radius-standard);
+  background-color: #41b4c9;
 }
 
 .button:hover {

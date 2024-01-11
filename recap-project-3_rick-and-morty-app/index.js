@@ -22,9 +22,11 @@ let searchQuery = "";
 const prevButton = createBtn("previous", (event) => {
   console.log(page);
   if (page <= 1) {
+    prevButton.disabled = true;
     return;
   } else {
     page = page - 1;
+    nextButton.disabled = false;
   }
   fetchCharacters();
 });
@@ -32,9 +34,11 @@ const prevButton = createBtn("previous", (event) => {
 const nextButton = createBtn("next", (event) => {
   console.log(page);
   if (page >= `${maxPage}`) {
+    nextButton.disabled = true;
     return;
   } else {
     page = page + 1;
+    prevButton.disabled = false;
   }
   fetchCharacters();
 });

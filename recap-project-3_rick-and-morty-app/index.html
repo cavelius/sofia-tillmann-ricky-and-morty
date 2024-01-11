@@ -10,30 +10,41 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
-    <h1 class="title">Rick and More</h1>
-    <main>
-      <div class="search-bar-container" data-js="search-bar-container">
-        <form action="" class="search-bar" data-js="search-bar">
-          <input
-            name="query"
-            class="search-bar__input"
-            type="text"
-            placeholder="search characters"
-            aria-label="character name"
-          />
-          <button class="search-bar__button" aria-label="search for character">
-            <img
-              class="search-bar__icon"
-              src="assets/magnifying-glass.png"
-              alt=""
-            />
-          </button>
-        </form>
-      </div>
+    <div class="container">
+      <header>
+        <img
+          class="logo"
+          src="./assets/Rick_and_Morty.svg.png"
+          alt="logo rick and morty"
+        />
 
-      <ul class="card-container" data-js="card-container"></ul>
-    </main>
-    <nav class="navigation" data-js="navigation"></nav>
+        <div class="search-bar-container" data-js="search-bar-container">
+          <form action="" class="search-bar" data-js="search-bar">
+            <input
+              name="query"
+              class="search-bar__input"
+              type="text"
+              placeholder="search characters"
+              aria-label="character name"
+            />
+            <button
+              class="search-bar__button"
+              aria-label="search for character"
+            >
+              <img
+                class="search-bar__icon"
+                src="assets/magnifying-glass.png"
+                alt=""
+              />
+            </button>
+          </form>
+        </div>
+      </header>
+      <main>
+        <ul class="card-container" data-js="card-container"></ul>
+      </main>
+      <nav class="navigation" data-js="navigation"></nav>
+    </div>
   </body>
   <script type="module" src="./index.js"></script>
 </html>
