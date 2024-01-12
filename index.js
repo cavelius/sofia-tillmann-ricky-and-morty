@@ -67,9 +67,10 @@ fetchCharacters();
 searchBar.addEventListener("submit", (event) => {
   event.preventDefault();
   cardContainer.innerHTML = "";
+  // refreshs page to 1
+  page = 1;
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
-
   const formElements = event.target.elements.value;
   searchQuery = data.query;
   fetchCharacters();
