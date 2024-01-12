@@ -1,6 +1,7 @@
 import { createCharacterCard } from "./components/card/card.js";
 import { createBtn } from "./components/nav-button/nav-button.js";
 import { createPagination } from "./components/nav-pagination/nav-pagination.js";
+import { throwErrorNoCharacter } from "./components/error/error.js";
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
@@ -45,22 +46,32 @@ const nextButton = createBtn(">>>", (event) => {
 
 async function fetchCharacters() {
   cardContainer.innerHTML = "";
-  const response = await fetch(
-    `https://rickandmortyapi.com/api/character?name=${searchQuery}&page=${page}`
-  );
-  const data = await response.json();
+  try {
+    const response = await fetch(
+      `https://rickandmortyapi.com/api/character?name=${searchQuery}&page=${page}`
+    );
+    const data = await response.json();
 
-  const cards = data.results;
+    const cards = data.results;
 
-  cards.forEach((card) => {
-    createCharacterCard(card);
-  });
-  maxPage = data.info.pages;
-  navigation.innerHTML = "";
+    cards.forEach((card) => {
+      createCharacterCard(card);
+    });
+    maxPage = data.info.pages;
+    navigation.innerHTML = "";
 
-  const pagination = createPagination(page, maxPage);
+    const pagination = createPagination(page, maxPage);
 
-  navigation.append(prevButton, pagination, nextButton);
+    navigation.append(prevButton, pagination, nextButton);
+  } catch (error) {
+    console.error("No character of this name!");
+    throwErrorNoCharacter(searchQuery);
+    navigation.innerHTML = "";
+    const pagination = createPagination(0, 0);
+    navigation.append(prevButton, pagination, nextButton);
+    nextButton.disabled = true;
+    prevButton.disabled = true;
+  }
 }
 fetchCharacters();
 
