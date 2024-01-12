@@ -19,7 +19,7 @@ let searchQuery = "";
 
 // previous button
 
-const prevButton = createBtn("previous", (event) => {
+const prevButton = createBtn("<<<", (event) => {
   console.log(page);
   if (page <= 1) {
     prevButton.disabled = true;
@@ -31,7 +31,7 @@ const prevButton = createBtn("previous", (event) => {
   fetchCharacters();
 });
 
-const nextButton = createBtn("next", (event) => {
+const nextButton = createBtn(">>>", (event) => {
   console.log(page);
   if (page >= `${maxPage}`) {
     nextButton.disabled = true;
