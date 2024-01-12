@@ -22,6 +22,8 @@ body {
   padding: 20px 0;
   display: flex;
   gap: 200px;
+  /* background-color: black; */
+  background-image: url(./assets/starfield_bg.jpg);
 }
 
 .container {
@@ -30,8 +32,9 @@ body {
 }
 
 header {
-  position: fixed;
-  border-radius: var(--border-radius-standard);
+  position: sticky;
+  top: 10px;
+  border-radius: 50px;
   background-color: white;
   width: 100%;
 }
@@ -50,10 +53,18 @@ main {
 .logo {
   width: 300px;
   align-items: center;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
+}
+
+.nav-container {
+  position: fixed;
+  bottom: 10px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  border-radius: var(--border-radius-standard);
 }
 
 .navigation {
-  position: fixed;
-  bottom: 10px;
+  /* background-color: black; */
 }

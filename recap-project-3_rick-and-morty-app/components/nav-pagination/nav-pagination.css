@@ -1,10 +1,16 @@
 .navigation {
   height: 30px;
+  width: 300px;
   display: grid;
-  grid-template-columns: 100px 100px 100px;
+  grid-template-columns: 115px 70px 115px;
 }
 
 .navigation__pagination {
   display: grid;
   place-items: center;
+  color: black;
+  box-shadow: 0px 0px 50px #bfde42;
+  border-radius: var(--border-radius-standard);
+  background-color: #bfde42;
+  font-size: 0.9rem;
 }
