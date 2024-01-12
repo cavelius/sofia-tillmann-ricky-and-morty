@@ -2,6 +2,7 @@
 @import "components/search-bar/search-bar.css";
 @import "components/nav-button/nav-button.css";
 @import "components/nav-pagination/nav-pagination.css";
+@import "components/error/error.css";
 
 * {
   box-sizing: border-box;
@@ -43,6 +44,10 @@ main {
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+.card-container {
+  max-width: 300px;
 }
 
 .title {
