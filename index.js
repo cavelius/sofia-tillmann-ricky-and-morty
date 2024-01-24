@@ -2,6 +2,7 @@ import { createCharacterCard } from "./components/card/card.js";
 import { createBtn } from "./components/nav-button/nav-button.js";
 import { createPagination } from "./components/nav-pagination/nav-pagination.js";
 import { throwErrorNoCharacter } from "./components/error/error.js";
+import { logoRefreshPage } from "./components/logo/logo.js";
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
@@ -9,6 +10,7 @@ const searchBarContainer = document.querySelector(
 );
 const searchBar = document.querySelector('[data-js="search-bar"]');
 const navigation = document.querySelector('[data-js="navigation"]');
+const logo = document.querySelector('[data-js="logo"]');
 
 // States
 let maxPage = 42;
@@ -46,6 +48,7 @@ const nextButton = createBtn(">>>", (event) => {
 
 async function fetchCharacters() {
   cardContainer.innerHTML = "";
+
   try {
     const response = await fetch(
       `https://rickandmortyapi.com/api/character?name=${searchQuery}&page=${page}`
@@ -63,6 +66,8 @@ async function fetchCharacters() {
     const pagination = createPagination(page, maxPage);
 
     navigation.append(prevButton, pagination, nextButton);
+    console.log(searchQuery);
+    console.log(page);
   } catch (error) {
     console.error("No character of this name!");
     throwErrorNoCharacter(searchQuery);
@@ -82,8 +87,12 @@ searchBar.addEventListener("submit", (event) => {
   page = 1;
   const formData = new FormData(event.target);
   const data = Object.fromEntries(formData);
-  const formElements = event.target.elements.value;
+  // const formElements = event.target.elements.value;
   searchQuery = data.query;
+  // both buttons are disabled after search error
+  // with new submit they are again activated
+  nextButton.disabled = false;
+  prevButton.disabled = false;
   fetchCharacters();
   event.target.reset();
 });
