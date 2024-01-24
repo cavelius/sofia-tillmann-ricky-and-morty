@@ -80,9 +80,6 @@ async function fetchCharacters() {
 }
 fetchCharacters();
 
-// with click on logo all pages are loaded (default mode of app)
-logoRefreshPage(searchQuery, page, () => fetchCharacters());
-
 searchBar.addEventListener("submit", (event) => {
   event.preventDefault();
   cardContainer.innerHTML = "";
